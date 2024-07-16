@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Nav from "../Pages/Nav";
 
 const Main = () => {
     return (
-        <div>
-            <h2>Nav</h2>
+        <div className="md:w-[80%] mx-auto font-poppins">
+            <Nav />
             <Outlet />
         </div>
     );
