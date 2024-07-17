@@ -9,7 +9,6 @@ const Home = () => {
   const { currentUser, isLoading: userLoading } = useAuth();
   const { role, isLoading } = useRole();
   if (isLoading || userLoading) return <Loading />;
-  // console.log(currentUser)
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}

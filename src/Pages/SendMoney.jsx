@@ -3,11 +3,13 @@ import toast from "react-hot-toast";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SendMoney = () => {
   const [fee, setFee] = useState(0);
   const { currentUser, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
+  const navigate = useNavigate();
   const handleFee = (e) => {
     const value = e.target.value;
     let fee = 0;
@@ -49,6 +51,7 @@ const SendMoney = () => {
       const { data } = await axiosCommon.put("/sendMoney", sendMoneyData);
       if (data?.message) {
         refetch();
+        navigate("/");
         Swal.fire({
           title: "Yeeeee!",
           text: `${data?.message}`,

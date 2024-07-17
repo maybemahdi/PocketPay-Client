@@ -1,4 +1,3 @@
-import { FaPhoneAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
@@ -10,10 +9,10 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const phone = form.phone.value;
+    const phoneOrEmail = form.phoneOrEmail.value;
     const pin = form.pin.value;
     const userInfo = {
-      phone,
+      phoneOrEmail,
       pin,
     };
     try {
@@ -74,15 +73,13 @@ const Login = () => {
           <div>
             <div className="relative">
               <input
-                placeholder="Phone number"
+                placeholder="Phone Number or Email Address"
                 className="w-full rounded-lg border-gray-300 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                name="phone"
-                type="number"
+                name="phoneOrEmail"
+                type="text"
+                data-temp-mail-org="0"
                 required
               />
-              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                <FaPhoneAlt size={20} className="text-gray-400" />
-              </span>
             </div>
           </div>
           {/* <div>

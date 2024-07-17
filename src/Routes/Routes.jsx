@@ -9,6 +9,7 @@ import Login from "../Pages/Login";
 import PrivateRoute from "./PrivateRoute";
 import SendMoney from "../Pages/SendMoney";
 import CashOut from "../Pages/CashOut";
+import CashIn from "../Pages/CashIn";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "/cashOut",
         element: <CashOut />,
+      },
+      {
+        path: "/cashIn",
+        element: <CashIn />,
       },
     ],
   },

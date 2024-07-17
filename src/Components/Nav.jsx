@@ -125,7 +125,7 @@ const Nav = () => {
             className="dropdown-content menu bg-base-100 rounded z-[1] w-fit p-2 my-7 shadow-md left-[-50px]"
           >
             <li>
-              <p>{user?.name}</p>
+              <p>{currentUser?.name}</p>
             </li>
             <li>
               <p>

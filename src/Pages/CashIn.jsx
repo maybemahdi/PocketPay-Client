@@ -1,49 +1,36 @@
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
-import useAxiosCommon from "../Hooks/useAxiosCommon";
 import useAuth from "../Hooks/useAuth";
-import { useState } from "react";
+import useAxiosCommon from "../Hooks/useAxiosCommon";
 import { useNavigate } from "react-router-dom";
 
-const CashOut = () => {
-  const [fee, setFee] = useState(0);
+const CashIn = () => {
   const { currentUser, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
   const navigate = useNavigate();
-  const handleFee = (e) => {
-    const value = e.target.value;
-    let fee = (value / 100) * 1.5;
-    setFee(fee);
-  };
 
-  const handleCashOut = async (e) => {
+  const handleCashInRequest = async (e) => {
     e.preventDefault();
     const form = e.target;
     const sender = currentUser?.phone;
     const accountNumber = form.accountNumber.value;
     const amount = parseFloat(form.amount.value);
     const pin = form.pin.value;
-    const totalPayAmount = parseFloat(amount) + parseFloat(fee);
-    const cashOutData = {
+    const cashInReqData = {
       sender,
       accountNumber,
       amount,
-      fee,
       pin,
-      totalPayAmount,
     };
-    console.log(cashOutData);
-    if (totalPayAmount > currentUser?.balance) {
-      return toast.error("You Do not Have sufficient balance");
-    }
+    console.log(cashInReqData);
     try {
-      const { data } = await axiosCommon.put("/cashOut", cashOutData);
-      if (data?.message) {
+      const { data } = await axiosCommon.post("/cashInReq", cashInReqData);
+      if (data?.insertedId) {
         refetch();
         navigate("/");
         Swal.fire({
           title: "Yeeeee!",
-          text: `${data?.message}`,
+          text: `Cash-In Request Send to ${data?.agent}`,
           icon: "success",
         });
       }
@@ -52,6 +39,7 @@ const CashOut = () => {
       }
     } catch (err) {
       toast.error(err.message);
+      // if()
     } finally {
       form.reset();
     }
@@ -63,14 +51,15 @@ const CashOut = () => {
     >
       <div className="flex flex-col items-center justify-center gap-4 mb-5">
         <h3 className="text-rose-500 font-bold text-3xl text-center">
-          Cash Out
+          Send Cash In Request
         </h3>
         <p className="text-center">
-          For Every Cash Out there will be a fee of 1.5% of Amount
+          You will get free Cash In without any Charge if the agent accept your
+          request!
         </p>
       </div>
       <form
-        onSubmit={handleCashOut}
+        onSubmit={handleCashInRequest}
         className="w-full flex flex-col justify-center gap-3"
       >
         <div>
@@ -87,7 +76,6 @@ const CashOut = () => {
         <div>
           <div className="relative">
             <input
-              onChange={handleFee}
               placeholder="Enter Amount"
               className="w-full rounded-lg border-gray-300 bg-slate-200 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
               name="amount"
@@ -95,9 +83,6 @@ const CashOut = () => {
               required
             />
           </div>
-          <p className="text-sm font-bold text-rose-500 pt-3 pl-3">
-            Fee: {fee.toFixed(2)} BDT
-          </p>
         </div>
         <div>
           <div className="relative">
@@ -116,11 +101,11 @@ const CashOut = () => {
           className="block w-full rounded-lg bg-rose-500 hover:bg-rose-600 text-white px-5 py-3 text-sm font-medium focus:outline-none transition-all duration-300"
           type="submit"
         >
-          Confirm Cash out
+          Request Cash In
         </button>
       </form>
     </div>
   );
 };
 
-export default CashOut;
+export default CashIn;
