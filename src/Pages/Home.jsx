@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import useRole from "../Hooks/useRole";
+import Loading from "../Components/Loading";
 
 const Home = () => {
   const [hovered, setHovered] = useState(false);
   const { user } = useAuth();
+  const { role, isLoading } = useRole();
+  if (isLoading) return <Loading />;
+  console.log(role)
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}

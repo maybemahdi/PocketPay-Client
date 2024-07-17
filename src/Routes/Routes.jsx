@@ -7,6 +7,7 @@ import Error from "../Pages/Error";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import PrivateRoute from "./PrivateRoute";
+import SendMoney from "../Pages/SendMoney";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "/transactions",
         element: <Transactions />,
+      },
+      {
+        path: "/sendMoney",
+        element: <SendMoney />,
       },
     ],
   },

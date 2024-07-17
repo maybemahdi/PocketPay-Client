@@ -1,10 +1,51 @@
 import { FaPhoneAlt } from "react-icons/fa";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { signIn, update, setUpdate } = useAuth();
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const phone = form.phone.value;
+    const pin = form.pin.value;
+    const userInfo = {
+      phone,
+      pin,
+    };
+    try {
+      const data = await signIn(userInfo);
+      console.log(data);
+      if (data?.loggedIn && data?.user?.status === "verified") {
+        toast.success("Login Successful");
+        navigate("/");
+        setUpdate(!update);
+        Swal.fire({
+          title: "Successful!",
+          text: "You have Been Logged in!",
+          icon: "success",
+        });
+      } else {
+        if (data.errorMessage) {
+          toast.error(data.errorMessage);
+        }
+        if (data?.user?.status && data?.user?.status !== "verified") {
+          Swal.fire({
+            title: "Wait!",
+            text: "You can login if your Agent Application is Verified!",
+            icon: "warning",
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    } finally {
+      form.reset();
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center flex-col bg-slate-200 font-poppins">

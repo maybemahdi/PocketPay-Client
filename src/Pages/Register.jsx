@@ -11,7 +11,7 @@ import useAuth from "../Hooks/useAuth";
 const Register = () => {
   const [accountType, setAccountType] = useState(null);
   const navigate = useNavigate();
-  const { createUser, setLoading } = useAuth();
+  const { createUser, update, setUpdate } = useAuth();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -32,26 +32,42 @@ const Register = () => {
         (accountType === "personal" && "user") ||
         (accountType === "agent" && "agent"),
       pin,
-      balance: 40.00,
+      status:
+        (accountType === "personal" && "verified") ||
+        (accountType === "agent" && "pending"),
+      balance:
+        (accountType === "personal" && 40.0) ||
+        (accountType === "agent" && 10000.0),
     };
     console.log(userInfo);
     try {
       const data = await createUser(userInfo);
-      if (data.insertedId) {
+      if (data?.insertedId && userInfo?.status === "verified") {
         toast.success("User Registered Successful");
         navigate("/");
+        setUpdate(!update);
         Swal.fire({
           title: "Congratulations!",
           text: "Registration Bonus BDT 40 has been added to your account!",
           icon: "success",
         });
       } else {
+        if (data?.insertedId && userInfo?.status !== "verified") {
+          Swal.fire({
+            title: "Wait!",
+            text: "Registration Successful! You can login if your Agent Application is Verified!",
+            icon: "warning",
+          });
+        }
         if (data.message) {
+          // console.log(data.message);
           toast.error(data.message);
         }
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      form.reset();
     }
   };
   return (

@@ -7,7 +7,7 @@ import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Nav = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, update, setUpdate } = useAuth();
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -20,6 +20,7 @@ const Nav = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
+        setUpdate(!update);
         Swal.fire({
           title: "Success!",
           text: "Your have been logged Out.",
@@ -121,13 +122,19 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded z-[1] w-44 p-2 my-7 shadow-md left-[-50px]"
+            className="dropdown-content menu bg-base-100 rounded z-[1] w-fit p-2 my-7 shadow-md left-[-50px]"
           >
             <li>
               <p>{user?.name}</p>
             </li>
             <li>
-              <p>Balance: {user?.balance.toFixed(2)} BDT</p>
+              <p>
+                Balance:{" "}
+                <span className="text-rose-500 font-bold">
+                  {user?.balance.toFixed(2)}
+                </span>{" "}
+                BDT
+              </p>
             </li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
