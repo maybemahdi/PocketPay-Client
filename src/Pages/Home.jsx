@@ -6,10 +6,10 @@ import Loading from "../Components/Loading";
 
 const Home = () => {
   const [hovered, setHovered] = useState(false);
-  const { user } = useAuth();
+  const { currentUser, isLoading: userLoading } = useAuth();
   const { role, isLoading } = useRole();
-  if (isLoading) return <Loading />;
-  console.log(role)
+  if (isLoading || userLoading) return <Loading />;
+  // console.log(currentUser)
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}
@@ -41,7 +41,7 @@ const Home = () => {
         >
           {hovered ? (
             <h3 className="text-xl font-bold text-center">
-              {user?.balance.toFixed(2)} BDT
+              {currentUser?.balance.toFixed(2)} BDT
             </h3>
           ) : (
             <h3 className="text-xl font-bold text-center">Check Balance</h3>

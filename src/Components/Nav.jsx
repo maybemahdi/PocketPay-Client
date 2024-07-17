@@ -7,7 +7,7 @@ import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Nav = () => {
-  const { user, logout, update, setUpdate } = useAuth();
+  const { user, logout, update, setUpdate, currentUser } = useAuth();
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -131,7 +131,7 @@ const Nav = () => {
               <p>
                 Balance:{" "}
                 <span className="text-rose-500 font-bold">
-                  {user?.balance.toFixed(2)}
+                  {currentUser?.balance.toFixed(2)}
                 </span>{" "}
                 BDT
               </p>

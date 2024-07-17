@@ -74,7 +74,7 @@ const Login = () => {
           <div>
             <div className="relative">
               <input
-                placeholder="Your phone number"
+                placeholder="Phone number"
                 className="w-full rounded-lg border-gray-300 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 name="phone"
                 type="number"
@@ -103,7 +103,7 @@ const Login = () => {
           <div>
             <div className="relative">
               <input
-                placeholder="Your 5 digit pin"
+                placeholder="PocketPay Pin"
                 className="w-full rounded-lg border-gray-300 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 type="number"
                 name="pin"

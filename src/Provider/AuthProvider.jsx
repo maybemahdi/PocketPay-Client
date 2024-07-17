@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
+import { useQuery } from "react-query";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
@@ -58,6 +59,20 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  //get user
+  const {
+    data: currentUser,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["currentUser"],
+    enabled: !!user?.phone,
+    queryFn: async () => {
+      const { data } = await axiosCommon.get(`/users/${user?.phone}`);
+      return data;
+    },
+  });
+
   const userInfo = {
     createUser,
     loading,
@@ -67,6 +82,9 @@ const AuthProvider = ({ children }) => {
     signIn,
     update,
     setUpdate,
+    currentUser,
+    isLoading,
+    refetch,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

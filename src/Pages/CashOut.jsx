@@ -1,28 +1,20 @@
-import { useState } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import useAuth from "../Hooks/useAuth";
-import Swal from "sweetalert2";
+import { useState } from "react";
 
-const SendMoney = () => {
+const CashOut = () => {
   const [fee, setFee] = useState(0);
   const { currentUser, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
   const handleFee = (e) => {
     const value = e.target.value;
-    let fee = 0;
-
-    // if (value >= 100) {
-    //   fee = Math.floor(value / 100) * 5;
-    // }
-    if (value > 100) {
-      fee = 5;
-    }
-
+    let fee = (value / 100) * 1.5;
     setFee(fee);
   };
 
-  const handleSendMoney = async (e) => {
+  const handleCashOut = async (e) => {
     e.preventDefault();
     const form = e.target;
     const sender = currentUser?.phone;
@@ -30,7 +22,7 @@ const SendMoney = () => {
     const amount = parseFloat(form.amount.value);
     const pin = form.pin.value;
     const totalPayAmount = parseFloat(amount) + parseFloat(fee);
-    const sendMoneyData = {
+    const cashOutData = {
       sender,
       accountNumber,
       amount,
@@ -38,7 +30,7 @@ const SendMoney = () => {
       pin,
       totalPayAmount,
     };
-    console.log(sendMoneyData);
+    console.log(cashOutData);
     if (amount < 50) {
       return toast.error("Minimum Amount is 50 BDT");
     }
@@ -46,7 +38,7 @@ const SendMoney = () => {
       return toast.error("You Do not Have sufficient balance");
     }
     try {
-      const { data } = await axiosCommon.put("/sendMoney", sendMoneyData);
+      const { data } = await axiosCommon.put("/cashOut", cashOutData);
       if (data?.message) {
         refetch();
         Swal.fire({
@@ -60,7 +52,6 @@ const SendMoney = () => {
       }
     } catch (err) {
       toast.error(err.message);
-      // if()
     } finally {
       form.reset();
     }
@@ -72,20 +63,20 @@ const SendMoney = () => {
     >
       <div className="flex flex-col items-center justify-center gap-4 mb-5">
         <h3 className="text-rose-500 font-bold text-3xl text-center">
-          Send Money
+          Cash Out
         </h3>
         <p className="text-center">
-          For Every Send Money over 100 BDT will charge 5.00 BDT as Fee
+          For Every Cash Out there will be a fee of 1.5% of Amount
         </p>
       </div>
       <form
-        onSubmit={handleSendMoney}
+        onSubmit={handleCashOut}
         className="w-full flex flex-col justify-center gap-3"
       >
         <div>
           <div className="relative">
             <input
-              placeholder="Enter Account number (ex: 017xxx)"
+              placeholder="Enter Agent number (ex: 017xxx)"
               className="w-full rounded-lg border-gray-300 bg-slate-200 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
               name="accountNumber"
               type="number"
@@ -125,11 +116,11 @@ const SendMoney = () => {
           className="block w-full rounded-lg bg-rose-500 hover:bg-rose-600 text-white px-5 py-3 text-sm font-medium focus:outline-none transition-all duration-300"
           type="submit"
         >
-          Confirm Send Money
+          Confirm Cash out
         </button>
       </form>
     </div>
   );
 };
 
-export default SendMoney;
+export default CashOut;
