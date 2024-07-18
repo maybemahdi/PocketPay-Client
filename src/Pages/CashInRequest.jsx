@@ -13,7 +13,7 @@ const CashInRequest = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["cashInRequests"],
+    queryKey: ["cashInRequests", currentUser],
     queryFn: async () => {
       const { data } = await axiosCommon.get(
         `/cashInReq/${currentUser?.phone}`
@@ -22,7 +22,7 @@ const CashInRequest = () => {
     },
   });
   if (isLoading) return <Loading />;
-  const handleApproval = async(req) => {
+  const handleApproval = async (req) => {
     try {
       Swal.fire({
         title: "Are you sure?",
