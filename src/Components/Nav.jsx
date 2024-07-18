@@ -5,9 +5,11 @@ import { Link, NavLink } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useRole from "../Hooks/useRole";
 
 const Nav = () => {
-  const { user, logout, update, setUpdate, currentUser } = useAuth();
+  const { logout, update, setUpdate, currentUser } = useAuth();
+  const { role } = useRole();
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",

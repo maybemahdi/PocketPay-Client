@@ -15,6 +15,9 @@ const Home = () => {
       className="mb-5 flex flex-col justify-center mt-10 md:mt-0"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h3 className="text-center text-2xl font-semibold md:col-span-3">
+          Profile: {role}
+        </h3>
         <Link
           to={"/sendMoney"}
           className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
@@ -27,12 +30,21 @@ const Home = () => {
         >
           <h3 className="text-xl font-bold text-center">Cash Out</h3>
         </Link>
-        <Link
-          to={"/cashIn"}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-        >
-          <h3 className="text-xl font-bold text-center">Cash In</h3>
-        </Link>
+        {role !== "agent" ? (
+          <Link
+            to={"/cashIn"}
+            className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
+          >
+            <h3 className="text-xl font-bold text-center">Cash In</h3>
+          </Link>
+        ) : (
+          <Link
+            to={"/cashInReq"}
+            className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
+          >
+            <h3 className="text-xl font-bold text-center">Cash In Requests</h3>
+          </Link>
+        )}
         <div
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
