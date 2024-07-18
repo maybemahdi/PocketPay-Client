@@ -4,10 +4,11 @@ import useAxiosCommon from "../Hooks/useAxiosCommon";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Components/Loading";
 
 const SendMoney = () => {
   const [fee, setFee] = useState(0);
-  const { currentUser, refetch } = useAuth();
+  const { currentUser, isLoading: userLoading, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
   const navigate = useNavigate();
   const handleFee = (e) => {
@@ -40,7 +41,10 @@ const SendMoney = () => {
       pin,
       totalPayAmount,
     };
-    console.log(sendMoneyData);
+    // console.log(sendMoneyData);
+    if (accountNumber === currentUser?.phone) {
+      return toast.error("You Can't Enter your own Number");
+    }
     if (amount < 50) {
       return toast.error("Minimum Amount is 50 BDT");
     }
@@ -68,6 +72,7 @@ const SendMoney = () => {
       form.reset();
     }
   };
+  if (userLoading) return <Loading />;
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}

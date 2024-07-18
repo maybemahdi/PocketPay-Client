@@ -2,19 +2,13 @@ import { useQuery } from "react-query";
 import useAuth from "../Hooks/useAuth";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import Loading from "../Components/Loading";
+import useRole from "../Hooks/useRole";
 
 const Transactions = () => {
   const axiosCommon = useAxiosCommon();
-  const {
-    currentUser,
-    isLoading: userLoading,
-    refetch: userRefetch,
-  } = useAuth();
-  const {
-    data: transactions,
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { role, isLoading: roleLoading } = useRole();
+  const { currentUser, isLoading: userLoading } = useAuth();
+  const { data: transactions, isLoading } = useQuery({
     queryKey: ["transactions", currentUser],
     queryFn: async () => {
       const { data } = await axiosCommon.get(
@@ -23,7 +17,7 @@ const Transactions = () => {
       return data;
     },
   });
-  if (isLoading || userLoading) return <Loading />;
+  if (isLoading || userLoading || roleLoading) return <Loading />;
   return (
     <div
       style={{ minHeight: "calc(100vh - 150px)" }}
@@ -62,7 +56,7 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {transactions?.length > 10
+              {transactions?.length > 10 && role !== "agent"
                 ? transactions?.slice(0, 10).map((tr, idx) => (
                     <tr className="text-rose-500 font-semibold" key={idx}>
                       <th>{idx + 1}</th>
@@ -74,7 +68,15 @@ const Transactions = () => {
                           year: "numeric",
                         })}
                       </td>
-                      <td>{new Date(tr?.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toLowerCase()}</td>
+                      <td>
+                        {new Date(tr?.timestamp)
+                          .toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })
+                          .toLowerCase()}
+                      </td>
                       <td>
                         {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
                       </td>
@@ -99,7 +101,15 @@ const Transactions = () => {
                           year: "numeric",
                         })}
                       </td>
-                      <td>{new Date(tr?.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toLowerCase()}</td>
+                      <td>
+                        {new Date(tr?.timestamp)
+                          .toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })
+                          .toLowerCase()}
+                      </td>
                       <td>
                         {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
                       </td>
@@ -113,6 +123,73 @@ const Transactions = () => {
                       <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
                     </tr>
                   ))}
+              {transactions?.length > 20 && role === "agent"
+                ? transactions?.slice(0, 20).map((tr, idx) => (
+                    <tr className="text-rose-500 font-semibold" key={idx}>
+                      <th>{idx + 1}</th>
+                      <td>{tr?.type}</td>
+                      <td>
+                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td>
+                        {new Date(tr?.timestamp)
+                          .toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })
+                          .toLowerCase()}
+                      </td>
+                      <td>
+                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                      </td>
+                      <td>
+                        {tr?.accountNumber === currentUser?.phone
+                          ? "You"
+                          : tr?.accountNumber}
+                      </td>
+                      <td>{tr?.amount.toFixed(2)} BDT</td>
+                      <td>{tr?.fee.toFixed(2)} BDT</td>
+                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                    </tr>
+                  ))
+                : transactions?.map((tr, idx) => {
+                    <tr className="text-rose-500 font-semibold" key={idx}>
+                      <th>{idx + 1}</th>
+                      <td>{tr?.type}</td>
+                      <td>
+                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td>
+                        {new Date(tr?.timestamp)
+                          .toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })
+                          .toLowerCase()}
+                      </td>
+                      <td>
+                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                      </td>
+                      <td>
+                        {tr?.accountNumber === currentUser?.phone
+                          ? "You"
+                          : tr?.accountNumber}
+                      </td>
+                      <td>{tr?.amount.toFixed(2)} BDT</td>
+                      <td>{tr?.fee.toFixed(2)} BDT</td>
+                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                    </tr>;
+                  })}
             </tbody>
           </table>
         </div>

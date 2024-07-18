@@ -3,9 +3,10 @@ import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Components/Loading";
 
 const CashIn = () => {
-  const { currentUser, refetch } = useAuth();
+  const { currentUser, isLoading: userLoading, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
   const navigate = useNavigate();
 
@@ -22,28 +23,32 @@ const CashIn = () => {
       amount,
       pin,
     };
-    console.log(cashInReqData);
-    try {
-      const { data } = await axiosCommon.post("/cashInReq", cashInReqData);
-      if (data?.insertedId) {
-        refetch();
-        navigate("/");
-        Swal.fire({
-          title: "Yeeeee!",
-          text: `Cash-In Request Send to ${data?.agent}`,
-          icon: "success",
-        });
-      }
-      if (data?.errorMessage) {
-        toast.error(data?.errorMessage);
-      }
-    } catch (err) {
-      toast.error(err.message);
-      // if()
-    } finally {
-      form.reset();
+    // console.log(cashInReqData);
+    if (accountNumber === currentUser?.phone){
+      return toast.error("You Can't Enter your own Number")
     }
+      try {
+        const { data } = await axiosCommon.post("/cashInReq", cashInReqData);
+        if (data?.insertedId) {
+          refetch();
+          navigate("/");
+          Swal.fire({
+            title: "Yeeeee!",
+            text: `Cash-In Request Send to ${data?.agent}`,
+            icon: "success",
+          });
+        }
+        if (data?.errorMessage) {
+          toast.error(data?.errorMessage);
+        }
+      } catch (err) {
+        toast.error(err.message);
+        // if()
+      } finally {
+        form.reset();
+      }
   };
+  if (userLoading) return <Loading />;
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}

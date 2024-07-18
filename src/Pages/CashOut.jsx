@@ -4,10 +4,11 @@ import useAxiosCommon from "../Hooks/useAxiosCommon";
 import useAuth from "../Hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Components/Loading";
 
 const CashOut = () => {
   const [fee, setFee] = useState(0);
-  const { currentUser, refetch } = useAuth();
+  const { currentUser, isLoading: userLoading, refetch } = useAuth();
   const axiosCommon = useAxiosCommon();
   const navigate = useNavigate();
   const handleFee = (e) => {
@@ -32,7 +33,10 @@ const CashOut = () => {
       pin,
       totalPayAmount,
     };
-    console.log(cashOutData);
+    // console.log(cashOutData);
+    if (accountNumber === currentUser?.phone) {
+      return toast.error("You Can't Enter your own Number");
+    }
     if (totalPayAmount > currentUser?.balance) {
       return toast.error("You Do not Have sufficient balance");
     }
@@ -56,6 +60,7 @@ const CashOut = () => {
       form.reset();
     }
   };
+  if (userLoading) return <Loading />;
   return (
     <div
       style={{ minHeight: "calc(100vh - 180px)" }}
