@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaKey, FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
@@ -172,6 +172,9 @@ const Register = () => {
                 max={99999}
                 required
               />
+              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+                <FaKey size={20} className="text-gray-400" />
+              </span>
             </div>
           </div>
 

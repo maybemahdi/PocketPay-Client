@@ -127,7 +127,7 @@ const Nav = () => {
             className="dropdown-content menu bg-base-100 rounded z-[1] w-fit p-2 my-7 shadow-md left-[-50px]"
           >
             <li>
-              <p>{currentUser?.name}</p>
+              <p>{currentUser?.name} <span className="text-rose-500 font-bold">({role?.toUpperCase()})</span></p>
             </li>
             <li>
               <p>

@@ -28,9 +28,6 @@ const Transactions = () => {
           <h3 className="text-rose-500 font-bold text-3xl text-center">
             Your Transaction History
           </h3>
-          <p className="text-center">
-            You Can View Your Last 10 Transaction History!
-          </p>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-4 mb-5">
@@ -56,140 +53,146 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {transactions?.length > 10 && role !== "agent"
-                ? transactions?.slice(0, 10).map((tr, idx) => (
-                    <tr className="text-rose-500 font-semibold" key={idx}>
-                      <th>{idx + 1}</th>
-                      <td>{tr?.type}</td>
-                      <td>
-                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td>
-                        {new Date(tr?.timestamp)
-                          .toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                          })
-                          .toLowerCase()}
-                      </td>
-                      <td>
-                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
-                      </td>
-                      <td>
-                        {tr?.accountNumber === currentUser?.phone
-                          ? "You"
-                          : tr?.accountNumber}
-                      </td>
-                      <td>{tr?.amount.toFixed(2)} BDT</td>
-                      <td>{tr?.fee.toFixed(2)} BDT</td>
-                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
-                    </tr>
-                  ))
-                : transactions?.map((tr, idx) => (
-                    <tr className="text-rose-500 font-semibold" key={idx}>
-                      <th>{idx + 1}</th>
-                      <td>{tr?.type}</td>
-                      <td>
-                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td>
-                        {new Date(tr?.timestamp)
-                          .toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                          })
-                          .toLowerCase()}
-                      </td>
-                      <td>
-                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
-                      </td>
-                      <td>
-                        {tr?.accountNumber === currentUser?.phone
-                          ? "You"
-                          : tr?.accountNumber}
-                      </td>
-                      <td>{tr?.amount.toFixed(2)} BDT</td>
-                      <td>{tr?.fee.toFixed(2)} BDT</td>
-                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
-                    </tr>
-                  ))}
-              {transactions?.length > 20 && role === "agent"
-                ? transactions?.slice(0, 20).map((tr, idx) => (
-                    <tr className="text-rose-500 font-semibold" key={idx}>
-                      <th>{idx + 1}</th>
-                      <td>{tr?.type}</td>
-                      <td>
-                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td>
-                        {new Date(tr?.timestamp)
-                          .toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                          })
-                          .toLowerCase()}
-                      </td>
-                      <td>
-                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
-                      </td>
-                      <td>
-                        {tr?.accountNumber === currentUser?.phone
-                          ? "You"
-                          : tr?.accountNumber}
-                      </td>
-                      <td>{tr?.amount.toFixed(2)} BDT</td>
-                      <td>{tr?.fee.toFixed(2)} BDT</td>
-                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
-                    </tr>
-                  ))
-                : transactions?.map((tr, idx) => {
-                    <tr className="text-rose-500 font-semibold" key={idx}>
-                      <th>{idx + 1}</th>
-                      <td>{tr?.type}</td>
-                      <td>
-                        {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td>
-                        {new Date(tr?.timestamp)
-                          .toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                          })
-                          .toLowerCase()}
-                      </td>
-                      <td>
-                        {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
-                      </td>
-                      <td>
-                        {tr?.accountNumber === currentUser?.phone
-                          ? "You"
-                          : tr?.accountNumber}
-                      </td>
-                      <td>{tr?.amount.toFixed(2)} BDT</td>
-                      <td>{tr?.fee.toFixed(2)} BDT</td>
-                      <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
-                    </tr>;
-                  })}
+              {transactions?.length > 10 &&
+                role !== "agent" &&
+                transactions?.slice(0, 10).map((tr, idx) => (
+                  <tr className="text-rose-500 font-semibold" key={idx}>
+                    <th>{idx + 1}</th>
+                    <td>{tr?.type}</td>
+                    <td>
+                      {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      {new Date(tr?.timestamp)
+                        .toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        })
+                        .toLowerCase()}
+                    </td>
+                    <td>
+                      {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                    </td>
+                    <td>
+                      {tr?.accountNumber === currentUser?.phone
+                        ? "You"
+                        : tr?.accountNumber}
+                    </td>
+                    <td>{tr?.amount.toFixed(2)} BDT</td>
+                    <td>{tr?.fee.toFixed(2)} BDT</td>
+                    <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                  </tr>
+                ))}
+              {transactions?.length < 10 &&
+                role !== "agent" &&
+                transactions?.map((tr, idx) => (
+                  <tr className="text-rose-500 font-semibold" key={idx}>
+                    <th>{idx + 1}</th>
+                    <td>{tr?.type}</td>
+                    <td>
+                      {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      {new Date(tr?.timestamp)
+                        .toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        })
+                        .toLowerCase()}
+                    </td>
+                    <td>
+                      {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                    </td>
+                    <td>
+                      {tr?.accountNumber === currentUser?.phone
+                        ? "You"
+                        : tr?.accountNumber}
+                    </td>
+                    <td>{tr?.amount.toFixed(2)} BDT</td>
+                    <td>{tr?.fee.toFixed(2)} BDT</td>
+                    <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                  </tr>
+                ))}
+              {transactions?.length > 20 &&
+                role === "agent" &&
+                transactions?.slice(0, 20).map((tr, idx) => (
+                  <tr className="text-rose-500 font-semibold" key={idx}>
+                    <th>{idx + 1}</th>
+                    <td>{tr?.type}</td>
+                    <td>
+                      {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      {new Date(tr?.timestamp)
+                        .toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        })
+                        .toLowerCase()}
+                    </td>
+                    <td>
+                      {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                    </td>
+                    <td>
+                      {tr?.accountNumber === currentUser?.phone
+                        ? "You"
+                        : tr?.accountNumber}
+                    </td>
+                    <td>{tr?.amount.toFixed(2)} BDT</td>
+                    <td>{tr?.fee.toFixed(2)} BDT</td>
+                    <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                  </tr>
+                ))}
+              {transactions?.length < 20 &&
+                role === "agent" &&
+                transactions?.map((tr, idx) => (
+                  <tr className="text-rose-500 font-semibold" key={idx}>
+                    <th>{idx + 1}</th>
+                    <td>{tr?.type}</td>
+                    <td>
+                      {new Date(tr?.timestamp).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      {new Date(tr?.timestamp)
+                        .toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        })
+                        .toLowerCase()}
+                    </td>
+                    <td>
+                      {tr?.sender === currentUser?.phone ? "You" : tr?.sender}
+                    </td>
+                    <td>
+                      {tr?.accountNumber === currentUser?.phone
+                        ? "You"
+                        : tr?.accountNumber}
+                    </td>
+                    <td>{tr?.amount.toFixed(2)} BDT</td>
+                    <td>{tr?.fee.toFixed(2)} BDT</td>
+                    <td>{tr?.totalPayAmount.toFixed(2)} BDT</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -34,6 +34,9 @@ const CashInRequest = () => {
         confirmButtonText: "Yes, Approve it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
+          if(currentUser?.balance < req?.amount){
+            return toast.error("You don't have enough Balance!")
+          }
           const { data } = await axiosCommon.put("/acceptCashIn", req);
           console.log(data);
           if (data.message === "Approved") {

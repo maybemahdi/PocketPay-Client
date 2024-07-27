@@ -16,7 +16,7 @@ const Home = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <h3 className="text-center text-2xl font-semibold md:col-span-3">
-          Profile: {role}
+          Profile: <span className="font-bold text-rose-500">{role?.toUpperCase()}</span>
         </h3>
         <Link
           to={"/sendMoney"}
