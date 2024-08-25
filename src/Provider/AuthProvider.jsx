@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  //get user
+  //get currentUser
   const {
     data: currentUser,
     isLoading,

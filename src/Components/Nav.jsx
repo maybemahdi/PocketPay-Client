@@ -124,10 +124,15 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded z-[1] w-fit p-2 my-7 shadow-md left-[-50px]"
+            className="dropdown-content menu bg-base-100 rounded z-[1] w-fit p-2 my-7 shadow-md md:left-[-80px] right-0"
           >
             <li>
-              <p>{currentUser?.name} <span className="text-rose-500 font-bold">({role?.toUpperCase()})</span></p>
+              <p>
+                {currentUser?.name}{" "}
+                <span className="text-rose-500 font-bold">
+                  ({role?.toUpperCase()})
+                </span>
+              </p>
             </li>
             <li>
               <p>

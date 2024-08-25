@@ -49,7 +49,7 @@ const SendMoney = () => {
       return toast.error("Minimum Amount is 50 BDT");
     }
     if (totalPayAmount > currentUser?.balance) {
-      return toast.error("You Do not Have sufficient balance");
+      return toast.error("You do not have sufficient balance");
     }
     try {
       const { data } = await axiosCommon.put("/sendMoney", sendMoneyData);

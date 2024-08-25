@@ -16,58 +16,41 @@ const Home = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <h3 className="text-center text-2xl font-semibold md:col-span-3">
-          Profile: <span className="font-bold text-rose-500">{role?.toUpperCase()}</span>
+          Profile:{" "}
+          <span className="font-bold text-rose-500">{role?.toUpperCase()}</span>
         </h3>
-        <Link
-          to={"/sendMoney"}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-        >
+        <Link to={"/sendMoney"} className={gridItemClassName}>
           <h3 className="text-xl font-bold text-center">Send Money</h3>
         </Link>
-        <Link
-          to={"/cashOut"}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-        >
+        <Link to={"/cashOut"} className={gridItemClassName}>
           <h3 className="text-xl font-bold text-center">Cash Out</h3>
         </Link>
         {role !== "agent" ? (
-          <Link
-            to={"/cashIn"}
-            className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-          >
+          <Link to={"/cashIn"} className={gridItemClassName}>
             <h3 className="text-xl font-bold text-center">Cash In</h3>
           </Link>
         ) : (
-          <Link
-            to={"/cashInReq"}
-            className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-          >
+          <Link to={"/cashInReq"} className={gridItemClassName}>
             <h3 className="text-xl font-bold text-center">Cash In Requests</h3>
           </Link>
         )}
         <div
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
+          className={gridItemClassName}
         >
           {hovered ? (
             <h3 className="text-xl font-bold text-center">
               {currentUser?.balance.toFixed(2)} BDT
             </h3>
           ) : (
-            <h3 className="text-xl font-bold text-center">Check Balance</h3>
+            <h3 className="text-xl font-bold text-center">Balance</h3>
           )}
         </div>
-        <Link
-          to={"/transactions"}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-        >
+        <Link to={"/transactions"} className={gridItemClassName}>
           <h3 className="text-xl font-bold text-center">Transaction History</h3>
         </Link>
-        <Link
-          to={"/overview"}
-          className="p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse hover:bg-rose-500 text-rose-500  hover:text-white transition-all duration-300"
-        >
+        <Link to={"/overview"} className={gridItemClassName}>
           <h3 className="text-xl font-bold text-center">Manage Profile</h3>
         </Link>
       </div>
@@ -76,3 +59,5 @@ const Home = () => {
 };
 
 export default Home;
+
+const gridItemClassName = `p-10 md:h-44 flex items-center justify-center rounded-md border border-rose-500 hover:border-collapse bg-rose-500  text-white transition-all duration-300`;

@@ -5,12 +5,12 @@ import useAxiosCommon from "./useAxiosCommon";
 
 const useRole = () => {
   const axiosCommon = useAxiosCommon();
-  const { user, loading } = useAuth();
+  const { currentUser, loading } = useAuth();
   const { data: role, isLoading } = useQuery({
-    queryKey: ["role", user?.email],
-    enabled: !loading && !!user?.email,
+    queryKey: ["role", currentUser?.email],
+    enabled: !loading && !!currentUser?.email,
     queryFn: async () => {
-      const { data } = await axiosCommon.get(`/role/${user?.email}`);
+      const { data } = await axiosCommon.get(`/role/${currentUser?.email}`);
       return data;
     },
   });
