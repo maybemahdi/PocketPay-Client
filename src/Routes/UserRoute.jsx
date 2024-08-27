@@ -9,7 +9,8 @@ const UserRoute = ({ children }) => {
   const { role, isLoading } = useRole();
 
   if (isLoading || loading || currentUserLoading) return <Loading />;
-  if (currentUser && role === "user") return children;
+  if ((currentUser && role === "user") || (currentUser && role === "admin"))
+    return children;
 
   return <Navigate to="/login" state={location.pathname} replace></Navigate>;
 };

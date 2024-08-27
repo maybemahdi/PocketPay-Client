@@ -1,14 +1,18 @@
-import { FaRegUser, FaUserAlt } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
-import { IoHomeSharp } from "react-icons/io5";
+import { IoHomeSharp, IoNotifications } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useRole from "../Hooks/useRole";
+import { FcManager } from "react-icons/fc";
+import { MdOutlineManageAccounts } from "react-icons/md";
+import useNotifications from "../Hooks/useNotifications";
 
 const Nav = () => {
   const { logout, update, setUpdate, currentUser } = useAuth();
+  const { notifications } = useNotifications();
   const { role } = useRole();
   const handleLogout = () => {
     Swal.fire({
@@ -76,6 +80,46 @@ const Nav = () => {
         <GrTransaction size={25} />{" "}
         <span className="md:hidden">Transactions</span>
       </NavLink>
+      <NavLink
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content="Notifications"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? "text-rose-500 font-semibold flex gap-4 items-center"
+            : "hover:text-rose-500 transition-all duration-300 font-semibold flex gap-4 items-center"
+        }
+        to={"/notifications"}
+      >
+        <div className="relative">
+          <IoNotifications size={25} />
+          {notifications && notifications.length >= 0 && (
+            <span className="absolute -top-1 -right-2 bg-rose-400 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">
+              {notifications.length}
+            </span>
+          )}
+        </div>
+        <span className="md:hidden">Notifications</span>
+      </NavLink>
+
+      {role === "admin" && (
+        <NavLink
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="Dashboard"
+          className={({ isActive, isPending }) =>
+            isPending
+              ? "pending"
+              : isActive
+              ? "text-rose-500 font-semibold flex gap-4 items-center"
+              : "hover:text-rose-500 transition-all duration-300 font-semibold flex gap-4 items-center"
+          }
+          to={"/dashboard/admin"}
+        >
+          <MdOutlineManageAccounts size={30} />{" "}
+          <span className="md:hidden">Dashboard</span>
+        </NavLink>
+      )}
       <Tooltip id="my-tooltip" />
     </>
   );
@@ -119,7 +163,7 @@ const Nav = () => {
         <div className="dropdown">
           <div tabIndex={0} role="button" className="">
             <div className="w-12 rounded">
-              <FaUserAlt className="text-rose-500" size={30} />
+              <FcManager className="text-rose-500" size={40} />
             </div>
           </div>
           <ul

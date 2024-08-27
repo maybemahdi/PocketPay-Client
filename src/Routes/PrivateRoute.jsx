@@ -3,10 +3,10 @@ import useAuth from "../Hooks/useAuth";
 import Loading from "../Components/Loading";
 
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, isLoading } = useAuth();
   const location = useLocation();
 
-  if (loading) return <Loading />;
+  if (loading || isLoading) return <Loading />;
   if (user) return children;
   return <Navigate to="/login" state={location.pathname} replace="true" />;
 };

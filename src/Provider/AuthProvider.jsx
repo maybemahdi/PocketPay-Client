@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      axiosCommon.post(`/jwt`, user).then((res) => {
+      axiosCommon.post(`/jwt`, JSON.parse(storedUser)).then((res) => {
         console.log(res.data);
       });
     } else {
@@ -69,6 +69,7 @@ const AuthProvider = ({ children }) => {
     enabled: !!user?.phone,
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/users/${user?.phone}`);
+      localStorage.setItem("user", JSON.stringify(data));
       return data;
     },
   });

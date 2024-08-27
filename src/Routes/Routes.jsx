@@ -13,6 +13,9 @@ import CashIn from "../Pages/CashIn";
 import AgentRoute from "./AgentRoute";
 import CashInRequest from "../Pages/CashInRequest";
 import UserRoute from "./UserRoute";
+import Management from "../Pages/Admin/Management";
+import AdminRoute from "./AdminRoute";
+import Notifications from "../Pages/Notifications";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +61,22 @@ export const router = createBrowserRouter([
           <AgentRoute>
             <CashInRequest />
           </AgentRoute>
+        ),
+      },
+      {
+        path: "/dashboard/admin",
+        element: (
+          <AdminRoute>
+            <Management />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/notifications",
+        element: (
+          <PrivateRoute>
+            <Notifications />
+          </PrivateRoute>
         ),
       },
     ],

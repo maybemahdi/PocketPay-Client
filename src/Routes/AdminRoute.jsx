@@ -4,11 +4,11 @@ import useAuth from "../Hooks/useAuth";
 import Loading from "../Components/Loading";
 
 const AdminRoute = ({ children }) => {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, loading, isLoading } = useAuth();
   const location = useLocation();
-  const { role, isLoading } = useRole();
+  const { role, isLoading: userLoading } = useRole();
 
-  if (isLoading || loading) return <Loading />;
+  if (isLoading || loading || userLoading) return <Loading />;
   if (currentUser && role === "admin") return children;
 
   return <Navigate to="/login" state={location.pathname} replace></Navigate>;
