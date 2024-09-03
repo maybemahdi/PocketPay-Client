@@ -12,6 +12,7 @@ const Register = () => {
   const [accountType, setAccountType] = useState(null);
   const navigate = useNavigate();
   const { createUser, update, setUpdate } = useAuth();
+  const axiosCommon = useAxiosCommon();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -43,6 +44,13 @@ const Register = () => {
     try {
       const data = await createUser(userInfo);
       if (data?.insertedId && userInfo?.status === "verified") {
+        const notification = {
+          phone: phone,
+          message: "You just received signing bonus BDT 40",
+          markAsRead: false,
+          time: new Date().toISOString(),
+        };
+        await axiosCommon.post("/api/addNotification", notification);
         toast.success("User Registered Successful");
         navigate("/");
         setUpdate(!update);
@@ -53,6 +61,13 @@ const Register = () => {
         });
       } else {
         if (data?.insertedId && userInfo?.status !== "verified") {
+          const notification = {
+            phone: phone,
+            message: "You just received agent signing bonus BDT 10000",
+            markAsRead: false,
+            time: new Date().toISOString(),
+          };
+          await axiosCommon.post("/api/addNotification", notification);
           Swal.fire({
             title: "Wait!",
             text: "Registration Successful! You can login if your Agent Application is Verified!",

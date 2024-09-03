@@ -53,10 +53,36 @@ const Management = () => {
       }
     });
   };
+
+  //delete user
+  const handleDelete = async (email) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this user?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data } = await axiosSecure.delete(`/api/deleteUser/${email}`);
+        console.log(data);
+        if (data?.deletedCount > 0) {
+          refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "The User has been deleted.",
+            icon: "success",
+          });
+        }
+      }
+    });
+  };
   if (isLoading) return <Loading />;
   return (
     <div
-      style={{ minHeight: "calc(100vh - 150px)" }}
+      style={{ minHeight: "calc(100vh - 160px)" }}
       className="mb-5 flex flex-col justify-center"
     >
       <h3 className="text-center text-2xl font-semibold md:col-span-3 mt-16">
@@ -75,6 +101,7 @@ const Management = () => {
               <th>Phone</th>
               <th>Balance</th>
               <th>Status</th>
+              <th>Action</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -101,12 +128,22 @@ const Management = () => {
                 <td>
                   <button
                     disabled={user?.status === "verified"}
-                    className={`btn bg-rose-500 hover:bg-rose-600 text-white disabled:text-black disabled:cursor-not-allowed`}
+                    className={`btn bg-rose-500 hover:bg-rose-600 text-white disabled:text-gray-500 disabled:cursor-not-allowed`}
                     onClick={() => handleVerify(user?._id)}
                   >
                     {user?.status === "verified" ? "Verified" : "Verify"}
                   </button>
                 </td>
+                {user?.role !== "admin" && (
+                  <td>
+                    <button
+                      className={`btn bg-rose-500 hover:bg-rose-600 text-white disabled:text-gray-500 disabled:cursor-not-allowed`}
+                      onClick={() => handleDelete(user?.email)}
+                    >
+                      Delete User
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

@@ -94,9 +94,9 @@ const Nav = () => {
       >
         <div className="relative">
           <IoNotifications size={25} />
-          {notifications && notifications.length >= 0 && (
+          {notifications && notifications.length > 0 && (
             <span className="absolute -top-1 -right-2 bg-rose-400 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">
-              {notifications.length}
+              {notifications.filter(notification => !notification.markAsRead).length}
             </span>
           )}
         </div>
@@ -106,7 +106,7 @@ const Nav = () => {
       {role === "admin" && (
         <NavLink
           data-tooltip-id="my-tooltip"
-          data-tooltip-content="Dashboard"
+          data-tooltip-content="Administration"
           className={({ isActive, isPending }) =>
             isPending
               ? "pending"
@@ -145,7 +145,7 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-md gap-6 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-3 shadow"
+            className="menu menu-md gap-5 dropdown-content bg-base-100 rounded-box z-[1000] mt-3 w-52 p-3 shadow"
           >
             {navLinks}
           </ul>

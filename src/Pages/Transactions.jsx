@@ -20,13 +20,13 @@ const Transactions = () => {
   if (isLoading || userLoading || roleLoading) return <Loading />;
   return (
     <div
-      style={{ minHeight: "calc(100vh - 150px)" }}
+      style={{ minHeight: "calc(100vh - 160px)" }}
       className="mb-5 flex flex-col items-center justify-center"
     >
       {transactions?.length > 0 ? (
         <div className="flex flex-col items-center justify-center gap-4 mb-5">
           <h3 className="text-rose-500 font-bold text-3xl text-center">
-            Your Transaction History
+            Your Latest Transaction History
           </h3>
         </div>
       ) : (

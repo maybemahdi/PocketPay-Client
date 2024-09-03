@@ -10,7 +10,7 @@ const useNotifications = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["notifications"],
+    queryKey: ["notifications", currentUser],
     queryFn: async () => {
       const { data } = await axiosCommon.get(
         `/api/notifications/${currentUser?.phone}`
