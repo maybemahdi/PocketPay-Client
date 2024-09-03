@@ -25,7 +25,7 @@ const Transactions = () => {
     >
       {transactions?.length > 0 ? (
         <div className="flex flex-col items-center justify-center gap-4 mb-5">
-          <h3 className="text-rose-500 font-bold text-3xl text-center">
+          <h3 className="text-rose-500 font-bold text-3xl text-center mt-10">
             Your Latest Transaction History
           </h3>
         </div>
