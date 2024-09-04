@@ -86,7 +86,8 @@ const Management = () => {
       className="mb-5 flex flex-col justify-center"
     >
       <h3 className="text-center text-2xl font-semibold md:col-span-3 mt-16">
-        Manage all <span className="font-bold text-rose-500">Users</span>
+        Manage all <span className="font-bold text-rose-500">Users</span> (
+        {users?.length})
       </h3>
       <div className="overflow-x-auto my-10">
         <table className="table">
