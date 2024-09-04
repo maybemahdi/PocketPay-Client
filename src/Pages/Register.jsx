@@ -37,7 +37,7 @@ const Register = () => {
         (accountType === "personal" && "verified") ||
         (accountType === "agent" && "pending"),
       balance:
-        (accountType === "personal" && 40.0) ||
+        (accountType === "personal" && 100.0) ||
         (accountType === "agent" && 10000.0),
     };
     console.log(userInfo);
@@ -46,7 +46,7 @@ const Register = () => {
       if (data?.insertedId && userInfo?.status === "verified") {
         const notification = {
           phone: phone,
-          message: "You just received signing bonus BDT 40",
+          message: "You just received signing bonus BDT 100",
           markAsRead: false,
           time: new Date().toISOString(),
         };
@@ -56,7 +56,7 @@ const Register = () => {
         setUpdate(!update);
         Swal.fire({
           title: "Congratulations!",
-          text: "Registration Bonus BDT 40 has been added to your account!",
+          text: "Registration Bonus BDT 100 has been added to your account!",
           icon: "success",
         });
       } else {
