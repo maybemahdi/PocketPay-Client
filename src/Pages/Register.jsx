@@ -38,7 +38,7 @@ const Register = () => {
         (accountType === "agent" && "pending"),
       balance:
         (accountType === "personal" && 100.0) ||
-        (accountType === "agent" && 10000.0),
+        (accountType === "agent" && 100000.0),
     };
     console.log(userInfo);
     try {
@@ -63,7 +63,7 @@ const Register = () => {
         if (data?.insertedId && userInfo?.status !== "verified") {
           const notification = {
             phone: phone,
-            message: "You just received agent signing bonus BDT 10000",
+            message: "You just received agent signing bonus BDT 100000",
             markAsRead: false,
             time: new Date().toISOString(),
           };
